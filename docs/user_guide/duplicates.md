@@ -6,12 +6,8 @@ In genetic algorithms, one way to maintain diversity is to eliminate duplicates 
 
 Based on exact elimination, meaning that two individuals (genes1 and genes2) are considered duplicates if and only if each element in genes1 is equal to the corresponding element in genes2. Internally, this cleaner uses Rust’s HashSet, which operates **extremely fast** for duplicate elimination.
 
-<div style="background-color: #fffde7; padding: 1em; border-left: 6px solid #ffd600; margin: 1em 0;">
-  <h3 style="margin-top: 0;">Note</h3>
-  <p>
+!!! warning 
     Benchmarks comparing pymoors with other Python libraries will be published soon. These benchmarks will highlight the importance and performance impact of duplicate elimination in genetic algorithms.
-  </p>
-</div>
 
 ```python
 from pymoors import ExactDuplicatesCleaner
@@ -32,8 +28,7 @@ cleaner = CloseDuplicatesCleaner(epsilon=1e-5)
 
 ```
 
-<div style="background-color: #ffebee; padding: 1em; border-left: 6px solid #f44336; margin: 1em 0;">
-  <p>
-    <strong>Caution:</strong> This duplicate elimination algorithm can be computationally expensive when the population size and the number of offsprings are large, because it requires calculating the distance matrix among offsprings first, and then between offsprings and the current population to ensure duplicate elimination using this criterion. The algorithm has a complexity of O(n*m) where n is the population size and m is the number of offsprings.
-  </p>
-</div>
+!!! Danger "Caution"
+ 
+     This duplicate elimination algorithm can be computationally expensive when the population size and the number of offsprings are large, because it requires calculating the distance matrix among offsprings first, and then between offsprings and the current population to ensure duplicate elimination using this criterion. The algorithm has a complexity of O(n*m) where n is the population size and m is the number of offsprings.
+

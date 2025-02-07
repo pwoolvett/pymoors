@@ -1,6 +1,9 @@
 
 # Installing pymoors from source
 
+
+## Setting Up
+
 Before you proceed, make sure you have **Rust** installed. We recommend using [rustup](https://rustup.rs/) for an easy setup:
 
 ```bash

@@ -1,29 +1,63 @@
 site_name: pymoors
+site_author: Andrés Sandoval
+site_description: A Python library for multi-objective optimization using genetic algorithms.
 theme:
+  language: en
+  logo: images/book.png
+  favicon: images/logo2.png
   name: material
   palette:
+  - media: '(prefers-color-scheme: light)'
     scheme: default
+    primary: black
+    accent: amber
+    toggle:
+      icon: material/lightbulb
+      name: Switch to dark mode
+  - media: '(prefers-color-scheme: dark)'
+    scheme: slate
+    primary: black
+    accent: amber
+    toggle:
+      icon: material/lightbulb-outline
+      name: Switch to light mode
   highlightjs: true
+  features:
+  - search.suggest
+  - search.highlight
+  - content.tabs.link
+  - navigation.indexes
+  - content.tooltips
+  - navigation.path
+  - content.code.annotate
+  - content.code.copy
+  - content.code.select
+  - navigation.tabs
+  - navigation.footer
 repo_url: https://github.com/andresliszt/pymoors
-repo_name: "GitHub"
+repo_name: "andresliszt/pymoors"
+
+markdown_extensions:
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - neoteroi.cards
+  - neoteroi.timeline
+  - neoteroi.projects
+  - admonition
+  - pymdownx.details
+  - pymdownx.arithmatex:
+      generic: true
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
 
 nav:
-  - Home: index.md
-  - Getting Started: getting_started.md
-  - Development: development.md
-  - User Guide:
+  - 🏠 Home: index.md
+  - 🚀 Getting Started: getting_started.md
+  - 💻 Development: development.md
+  - 📖 User Guide:
       - Fitness and Constraints: user_guide/fitness_and_constraints.md
       - Genetic Operators: user_guide/operators.md
       - Duplicates Cleaner: user_guide/duplicates.md
       - Algorithms: user_guide/algorithms.md
-
-markdown_extensions:
-  - codehilite:
-      guess_lang: false
-  - pymdownx.arithmatex:
-      generic: true
-  - pymdownx.superfences
-  - pymdownx.highlight
-extra_javascript:
-  - javascripts/mathjax.js
-  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js

@@ -4,14 +4,8 @@ In pymoors, the genetic operators expected by the various algorithms are **mutat
 
 Currently, pymoors comes with a battery of **pre-defined genetic operators** implemented in Rust. The goal is to continuously add more classic genetic operators to reduce the amount of Python code that needs to be executed.
 
-<div style="background-color: #fffde7; padding: 1em; border-left: 6px solid #ffd600; margin: 1em 0;">
-  <h3 style="margin-top: 0;">Note</h3>
-  <p>
+!!! warning 
     At the moment, pymoors does not provide a way to define custom genetic operators using NumPy functions. This feature is planned to be available as soon as possible.
-  </p>
-</div>
-
-
 
 Each genetic operator in pymoors is exposed to Python as a class. For example, consider the following:
 
@@ -26,16 +20,6 @@ mutation=GaussianMutation(gene_mutation_rate=0.1, sigma=0.01)
 crossover=ExponentialCrossover(exponential_crossover_rate = 0.75)
 ```
 
-<div style="background-color: #fffde7; padding: 1em; border-left: 6px solid #ffd600; margin: 1em 0;">
-  <h3 style="margin-top: 0;">Note</h3>
-  <p>
-    Currently, these instances serve only as a means to inform Rust which operator to use, but they do not expose any public methods to Python; everything functions internally within the Rust core. We are currently evaluating whether it is necessary to expose these methods to Python so that users can interact with them.
-  </p>
-</div>
-
-<div style="background-color: #fffde7; padding: 1em; border-left: 6px solid #ffd600; margin: 1em 0;">
-  <h3 style="margin-top: 0;">Note</h3>
-  <p>
-    This section will be updated with more information on all the genetic operators in the near future.
-  </p>
-</div>
+!!! warning 
+    1. Currently, these instances serve only as a means to inform Rust which operator to use, but they do not expose any public methods to Python; everything functions internally within the Rust core. We are currently evaluating whether it is necessary to expose these methods to Python so that users can interact with them.
+    2. This section will be updated with more information on all the genetic operators in the near future.

@@ -1,6 +1,11 @@
-# Welcome to the pymoors Documentation
+---
+hide:
+  - navigation
+---
 
-This is the official documentation for the **pymoors** project.
+# 📚 Welcome to the pymoors Documentation
+
+> This is the official documentation for the **pymoors** project.
 
 ## What is pymoors?
 
@@ -15,7 +20,7 @@ Genetic Algorithms are exposed to Python via [pyo3](https://github.com/PyO3/pyo3
 - Accessible in Python through pyo3.
 - Specialized in solving multi-objective optimization problems using genetic algorithms.
 
-# Introduction to Multi-Objective Optimization
+## Introduction to Multi-Objective Optimization
 
 **Multi-objective optimization** refers to a set of techniques and methods designed to solve problems where *multiple objectives* must be satisfied simultaneously. These objectives are often *conflicting*, meaning that improving one may deteriorate another. For instance, one might seek to **minimize** production costs while **maximizing** product quality at the same time.
 

@@ -6,11 +6,11 @@ You can install pymoors directly from PyPi doing
 pip install pymoors
 ```
 
-# Example: The Multi-Objective Knapsack Problem
+## Example: The Multi-Objective Knapsack Problem
 
 The **multi-objective knapsack problem** is a classic example in optimization where we aim to select items, each with its own *benefits* and *costs*, subject to certain constraints (e.g., weight capacity). In the multi-objective version, we want to optimize more than one objective function simultaneously—often, maximizing multiple benefits or qualities at once.
 
-## Mathematical Formulation
+### Mathematical Formulation
 
 Suppose we have \(n\) items. Each item \(i\) has:
 - A profit \(p_i\).
@@ -28,7 +28,7 @@ $$
 \end{aligned}
 $$
 
-## Solving it with `pymoors`
+### Solving it with `pymoors`
 
 ```py
 import numpy as np
@@ -163,38 +163,30 @@ array([ -7., -15.])
 array([0.])
 ```
 
-<div style="background-color: #e8f5e9; padding: 1em; border-left: 6px solid #66bb6a; margin: 1em 0;">
-  <h3 style="margin-top: 0;">Note on Population Size and Duplicates</h3>
-  <p>
+!!! note "Population Size and Duplicates"
+
     Note that although the specified <code>pop_size</code> was 32, the final population ended up being 13 individuals,
     of which 1 had <code>rank = 0</code>.
     This is because we used the <code>keep_infeasible=False</code> argument,
     removing any individual that did not satisfy the constraints (in this case, the weight constraint).
     We also used a duplicate remover called <code>ExactDuplicatesCleaner</code> that eliminates all exact duplicates—
     meaning whenever <code>genes1 == genes2</code> in every component.
-  </p>
-</div>
 
+!!! tip "Variable Types in pymoors"
 
-<div style="background-color: #fffde7; padding: 1em; border-left: 6px solid #66bb6a; margin: 1em 0;">
-  <h3 style="margin-top: 0;">Note on Variable Types in pymoors</h3>
-  <p>
-    In <strong>pymoors</strong>, there is no strict enforcement of whether variables are integer, binary, or real.
-    The core Rust implementation works with <code>f64</code> ndarrays.
-    To preserve a specific variable type—binary, integer, or real—you must ensure that the genetic operators themselves maintain it.
-  </p>
-  <p>
-    It is <strong>the user's responsibility</strong> to choose the appropriate genetic operators for the variable type in question.
+    In **pymoors**, there is no strict enforcement of whether variables are integer, binary, or real.  
+    The core Rust implementation works with `f64` ndarrays.  
+    To preserve a specific variable type—binary, integer, or real—you must ensure that the genetic operators themselves maintain it.  
+
+    It is **the user's responsibility** to choose the appropriate genetic operators for the variable type in question.  
     In the knapsack example, we use binary-style genetic operators, which is why the solutions are arrays of 0s and 1s.
-  </p>
-</div>
 
 
-# Example: A Real-Valued Multi-Objective Optimization Problem
+## Example: A Real-Valued Multi-Objective Optimization Problem
 
 Below is a simple *two-variable* multi-objective problem to illustrate real-valued optimization with `pymoors`. We have two continuous decision variables, \( x_1 \) and \( x_2 \), both within a given range. We define **two** objective functions to be minimized simultaneously, and we solve this using the popular NSGA2 algorithm.
 
-## Mathematical Formulation
+### Mathematical Formulation
 
 Let \(\mathbf{x} = (x_1, x_2)\) be our decision variables, each constrained to the interval \([-2, 2]\). We define the following objectives:
 
@@ -210,14 +202,14 @@ Let \(\mathbf{x} = (x_1, x_2)\) be our decision variables, each constrained to t
 \end{aligned}
 \]
 
-### Interpretation
+**Interpretation**
 
 1. **\(f_1\)** measures the distance of \(\mathbf{x}\) from the origin \((0,0)\) in the 2D plane.
 2. **\(f_2\)** measures the distance of \(\mathbf{x}\) from the point \((1,0)\).
 
 Thus, \(\mathbf{x}\) must compromise between being close to \((0,0)\) and being close to \((1,0)\). There is no single point in \([-2,2]^2\) that *simultaneously* minimizes both distances perfectly (other than at the boundary of these trade-offs), so we end up with a **Pareto front** rather than a single best solution.
 
-## Solving it with `pymoors`
+### Solving it with `pymoors`
 
 Below is a complete example in Python demonstrating how to set up this problem using and solve it with the **NSGA2** genetic algorithm.
 

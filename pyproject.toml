@@ -48,10 +48,14 @@ linting = [
     "ruff",
     "pytest"
 ]
+docs = [
+    "mkdocs-material==9.5.25"
+]
 
 all = [
   { include-group = "testing" },
-  { include-group = "linting" }
+  { include-group = "linting" },
+  { include-group = "docs" }
 ]
 
 [tool.maturin]

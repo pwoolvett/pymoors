@@ -51,15 +51,11 @@ This method ensures a consistent and streamlined optimization process within `py
 
 Constraints in an optimization problem are optional. They are defined using a similar approach to the fitness function. In pymoors, you define a constraint function `g(genes)` where `genes` is a 2D array of shape `(pop_size, n_vars)`, and the function must return a 2D array of shape `(pop_size, n_constraints)`. Each row of the output corresponds to the constraint evaluations for an individual in the population.
 
-<div style="background-color: #fffde7; padding: 1em; border-left: 6px solid #ffd600; margin: 1em 0;">
-  <h3 style="margin-top: 0;">Feasibility of an Individual</h3>
-  <p>
-    In <strong>pymoors</strong>, an individual in the population is considered <strong>feasible</strong> if and only if all constraints are less than or equal to 0.
-  </p>
-  <p>
+!!! warning "Feasibility of an Individual"
+
+    In **pymoors**, an individual in the population is considered **feasible** if and only if all constraints are less than or equal to 0.  
+    
     In the following subsections, we will explain how to consider other types of inequalities.
-  </p>
-</div>
 
 
 Below is an example constraint function. In this example, we enforce a simple constraint: the sum of the decision variables for each individual must be less than or equal to a specified threshold value.
