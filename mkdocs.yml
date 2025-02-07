@@ -3,7 +3,7 @@ site_author: Andrés Sandoval
 site_description: A Python library for multi-objective optimization using genetic algorithms.
 theme:
   language: en
-  logo: images/book.png
+  logo: images/logo2.png
   favicon: images/logo2.png
   name: material
   palette:
@@ -49,8 +49,10 @@ markdown_extensions:
   - pymdownx.arithmatex:
       generic: true
 extra_javascript:
-  - javascripts/mathjax.js
   - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+
+extra_css:
+  - stylesheets/extra.css
 
 nav:
   - 🏠 Home: index.md
