@@ -12,7 +12,8 @@ ARG DEBIAN_FRONTEND=noninteractive
 #   rm -rf /var/lib/apt/lists/*
 # EOF
 
+USER vscode
 RUN <<EOF
- curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh -s -- -y
- curl -LsSf https://astral.sh/uv/install.sh | sh
+  curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh -s -- -y
+  curl -LsSf https://astral.sh/uv/install.sh | sh
 EOF
