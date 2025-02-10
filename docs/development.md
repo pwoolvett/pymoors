@@ -27,7 +27,7 @@ cd pymoors
 * **Create a virtual environment**
 ```sh
 # Create the virtual environment
-python -m venv .venv
+uv venv
 
 # Activate it (Linux/Mac)
 source .venv/bin/activate
