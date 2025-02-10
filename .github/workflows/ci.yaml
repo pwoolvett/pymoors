@@ -10,11 +10,10 @@ env:
   DEFAULT_PYTHON: 3.12
 
 jobs:
-  coverage:
+  coverage-python:
     runs-on: ubuntu-latest
 
     steps:
-
     - uses: actions/checkout@v4
 
     - name: Install uv
@@ -36,7 +35,7 @@ jobs:
         source <(cargo llvm-cov show-env --export-prefix)
         uv run pytest --cov --cov-report=xml
 
-    - name: Get rust coverage report
+    - name: Get pytest coverage report
       run: |
         source <(cargo llvm-cov show-env --export-prefix)
         cargo llvm-cov report --codecov --output-path codecov.json --ignore-filename-regex ".*/tests?/.*"
@@ -45,6 +44,23 @@ jobs:
       uses: codecov/codecov-action@v5
       with:
         files: coverage.xml, codecov.json
+        fail_ci_if_error: true
+        token: ${{ secrets.CODECOV_TOKEN }}
+
+  coverage-rust:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install cargo-llvm-cov
+      uses: taiki-e/install-action@cargo-llvm-cov
+    - name: Run tests
+      run: cargo llvm-cov --workspace --lcov --output-path lcov.info
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v5
+      with:
+        files: lcov.info
         fail_ci_if_error: true
         token: ${{ secrets.CODECOV_TOKEN }}
 
@@ -125,7 +141,7 @@ jobs:
 
   check:
     if: always()
-    needs: [coverage, test-python, lint]
+    needs: [coverage-python, coverage-rust, test-python, lint]
     runs-on: ubuntu-latest
     steps:
       - name: Decide whether the needed jobs succeeded or failed
