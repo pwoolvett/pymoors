@@ -1,0 +1,42 @@
+name: CodSpeed
+
+on:
+  push:
+    branches:
+      - "main"
+  pull_request:
+  workflow_dispatch:
+
+env:
+  DEFAULT_PYTHON: 3.12
+
+jobs:
+  benchmarks:
+    name: Run benchmarks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v3
+        with:
+          python-version: ${{ env.DEFAULT_PYTHON }}
+
+      - name: install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          enable-cache: true
+
+      - name: install rust stable
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install pymoors
+        run: |
+          uv sync --group testing
+          uv run maturin develop --release --uv
+          uv pip install pytest-codspeed
+
+      # FIXME: Looks like is not running in an optimized mode in the runner
+      # - name: Run benchmarks
+      #   uses: CodSpeedHQ/action@v3
+      #   with:
+      #     run: uv run pytest tests/benchmarks --codspeed
