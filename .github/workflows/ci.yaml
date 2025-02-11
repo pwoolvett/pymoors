@@ -33,7 +33,7 @@ jobs:
     - name: Test with pytest
       run: |
         source <(cargo llvm-cov show-env --export-prefix)
-        uv run pytest --cov --cov-report=xml
+        uv run pytest --ignore=tests/benchmarks --cov --cov-report=xml
 
     - name: Get pytest coverage report
       run: |
@@ -115,7 +115,7 @@ jobs:
           make build-dev
 
       - name: Test with pytest
-        run: uv run pytest
+        run: uv run pytest --ignore=tests/benchmarks # Benchmarks run in their own flow
 
   lint:
     runs-on: ubuntu-latest
@@ -139,9 +139,21 @@ jobs:
       - run: make lint
       - run: make pyright
 
+  bench:
+    name: Rust benchmarks
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: install rust nightly
+        uses: dtolnay/rust-toolchain@nightly
+
+      - run: cargo bench
+
   check:
     if: always()
-    needs: [coverage-python, coverage-rust, test-python, lint]
+    needs: [coverage-python, coverage-rust, test-python, lint, bench]
     runs-on: ubuntu-latest
     steps:
       - name: Decide whether the needed jobs succeeded or failed
