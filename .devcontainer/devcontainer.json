@@ -7,7 +7,8 @@
     "vscode": {
       "extensions": [
         "rust-lang.rust-analyzer",
-        "ms-python.python"
+        "ms-python.python",
+        "charliermarsh.ruff"
       ]
     }
   }
