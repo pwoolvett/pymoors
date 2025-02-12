@@ -1,6 +1,5 @@
 use crate::genetic::Individual;
 use crate::operators::{DuelResult, GeneticOperator, SelectionOperator};
-use crate::random::get_rng;
 use rand::RngCore;
 use std::fmt::Debug;
 
@@ -102,6 +101,7 @@ mod tests {
     use super::*;
     use crate::genetic::{Individual, Population};
     use crate::operators::{DuelResult, SelectionOperator};
+    use crate::random::get_rng;
     use ndarray::{arr1, arr2, Array2};
     use rand::prelude::*;
 
