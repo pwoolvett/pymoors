@@ -102,7 +102,6 @@ impl MultiObjectiveAlgorithm {
         upper_bound: Option<f64>,
         seed: Option<u64>,
     ) -> Result<Self, MultiObjectiveAlgorithmError> {
-
         let mut rng = get_rng(seed);
         let mut genes = sampler.operate(pop_size, n_vars, &mut rng);
 
