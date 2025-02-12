@@ -1,5 +1,5 @@
 use numpy::ndarray::{concatenate, Axis};
-use rand::Rng;
+use rand::rngs::StdRng;
 use std::error::Error;
 use std::fmt;
 
@@ -75,7 +75,7 @@ pub struct MultiObjectiveAlgorithm {
     num_iterations: usize,
     verbose: bool,
     n_vars: usize,
-    seed: Option<u64>,
+    rng: StdRng,
 }
 
 impl MultiObjectiveAlgorithm {
@@ -144,15 +144,15 @@ impl MultiObjectiveAlgorithm {
             num_iterations,
             verbose,
             n_vars,
-            seed,
+            rng,
         })
     }
 
-    fn next<R: Rng>(&mut self, rng: &mut R) -> Result<(), MultiObjectiveAlgorithmError> {
+    fn next(&mut self) -> Result<(), MultiObjectiveAlgorithmError> {
         // Obtain offspring genes.
         let offspring_genes = self
             .evolve
-            .evolve(&self.population, self.n_offsprings, 200, rng)
+            .evolve(&self.population, self.n_offsprings, 200, &mut self.rng)
             .map_err::<MultiObjectiveAlgorithmError, _>(Into::into)?;
 
         // Validate that the number of columns in offspring_genes matches n_vars.
@@ -184,10 +184,9 @@ impl MultiObjectiveAlgorithm {
     }
 
     pub fn run(&mut self) -> Result<(), MultiObjectiveAlgorithmError> {
-        let mut rng = get_rng(self.seed);
 
         for current_iter in 0..self.num_iterations {
-            match self.next(&mut rng) {
+            match self.next() {
                 Ok(()) => {
                     if self.verbose {
                         print_minimum_objectives(&self.population, current_iter + 1);
