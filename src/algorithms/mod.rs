@@ -1,5 +1,7 @@
 use numpy::ndarray::{concatenate, Axis};
 use rand::rngs::StdRng;
+use rand::Rng;
+use rand::SeedableRng;
 use std::error::Error;
 use std::fmt;
 
@@ -16,7 +18,6 @@ use crate::{
         evolve::Evolve, evolve::EvolveError, CrossoverOperator, MutationOperator, SamplingOperator,
         SelectionOperator, SurvivalOperator,
     },
-    random::get_rng,
 };
 
 mod macros;
@@ -102,7 +103,7 @@ impl MultiObjectiveAlgorithm {
         upper_bound: Option<f64>,
         seed: Option<u64>,
     ) -> Result<Self, MultiObjectiveAlgorithmError> {
-        let mut rng = get_rng(seed);
+        let mut rng = seed.map_or_else(StdRng::from_entropy, StdRng::seed_from_u64);
         let mut genes = sampler.operate(pop_size, n_vars, &mut rng);
 
         // Create the evolution operator.
