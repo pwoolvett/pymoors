@@ -121,7 +121,7 @@ mod tests {
         let p1 = Individual::new(arr1(&[1.0, 2.0]), arr1(&[0.5]), None, 0, Some(10.0));
         let p2 = Individual::new(arr1(&[3.0, 4.0]), arr1(&[0.6]), None, 0, Some(5.0));
         let selector = RankAndCrowdingSelection::new(); // Default: Maximize
-        let mut rng = thread_rng();
+        let mut rng = StdRng::from_entropy();
         let result = selector.tournament_duel(&p1, &p2, &mut rng);
         assert_eq!(result, DuelResult::LeftWins);
     }
@@ -134,7 +134,7 @@ mod tests {
         let p1 = Individual::new(arr1(&[1.0, 2.0]), arr1(&[0.5]), None, 0, Some(10.0));
         let p2 = Individual::new(arr1(&[3.0, 4.0]), arr1(&[0.6]), None, 0, Some(5.0));
         let selector = RankAndCrowdingSelection::new_with_comparison(DiversityComparison::Minimize);
-        let mut rng = thread_rng();
+        let mut rng = StdRng::from_entropy();
         let result = selector.tournament_duel(&p1, &p2, &mut rng);
         assert_eq!(result, DuelResult::RightWins);
     }
@@ -155,7 +155,7 @@ mod tests {
         // After splitting: pop_a = 2 winners, pop_b = 2 winners.
         let n_crossovers = 2;
         let selector = RankAndCrowdingSelection::new();
-        let mut rng = thread_rng();
+        let mut rng = StdRng::from_entropy();
         let (pop_a, pop_b) = selector.operate(&population, n_crossovers, &mut rng);
 
         assert_eq!(pop_a.len(), 2);
@@ -177,7 +177,7 @@ mod tests {
         // After splitting: pop_a = 1 winner, pop_b = 1 winner.
         let n_crossovers = 1;
         let selector = RankAndCrowdingSelection::new();
-        let mut rng = thread_rng();
+        let mut rng = StdRng::from_entropy();
         let (pop_a, pop_b) = selector.operate(&population, n_crossovers, &mut rng);
 
         // The feasible individual should be one of the winners.
@@ -200,7 +200,7 @@ mod tests {
         // After splitting: pop_a = 1 winner, pop_b = 1 winner.
         let n_crossovers = 1;
         let selector = RankAndCrowdingSelection::new();
-        let mut rng = thread_rng();
+        let mut rng = StdRng::from_entropy();
         let (pop_a, pop_b) = selector.operate(&population, n_crossovers, &mut rng);
 
         // In a tie, the overall selection process must eventually choose winners.
@@ -218,7 +218,7 @@ mod tests {
         let fitness = Array2::from_shape_fn((pop_size, 1), |(i, _)| i as f64 / 100.0);
         let constraints = None;
 
-        let mut rng = thread_rng();
+        let mut rng = StdRng::from_entropy();
         let rank_vec: Vec<usize> = (0..pop_size).map(|_| rng.gen_range(0..5)).collect();
         let rank = arr1(&rank_vec);
 
@@ -248,7 +248,7 @@ mod tests {
 
         let n_crossovers = 1;
         let selector = RankAndCrowdingSelection::new();
-        let mut rng = thread_rng();
+        let mut rng = StdRng::from_entropy();
         let (pop_a, pop_b) = selector.operate(&population, n_crossovers, &mut rng);
 
         // The individual with the better rank should win one tournament.

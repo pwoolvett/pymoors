@@ -211,6 +211,8 @@ mod tests {
     use crate::operators::SurvivalOperator;
     use ndarray::{array, Array1, Array2};
     use rand::Rng;
+    use rand::rngs::StdRng;
+    use rand::SeedableRng;
     use std::collections::HashMap;
 
     /// Helper function: Checks if two 2D arrays are approximately equal within a given epsilon.
@@ -235,7 +237,7 @@ mod tests {
     fn generate_reference_points(n_points: usize, n_objectives: usize) -> Array2<f64> {
         // A simple grid-based generation for demonstration purposes.
         let mut points = Vec::new();
-        let mut rng = rand::thread_rng();
+        let mut rng = StdRng::from_entropy();
 
         for _ in 0..n_points {
             let mut point = Vec::new();

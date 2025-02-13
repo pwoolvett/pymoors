@@ -83,12 +83,7 @@ pub trait MutationOperator: GeneticOperator {
     /// * `population` - The population as a mutable 2D array (each row represents an individual).
     /// * `mutation_rate` - The probability that an individual is mutated.
     /// * `rng` - A random number generator.
-    fn operate(
-        &self,
-        population: &mut PopulationGenes,
-        mutation_rate: f64,
-        rng: &mut dyn RngCore,
-    ) {
+    fn operate(&self, population: &mut PopulationGenes, mutation_rate: f64, rng: &mut dyn RngCore) {
         // Get the number of individuals (i.e. the number of rows).
         let pop_size = population.len_of(Axis(0));
         // Generate a boolean mask for which individuals will be mutated.
@@ -103,8 +98,6 @@ pub trait MutationOperator: GeneticOperator {
         }
     }
 }
-
-
 
 pub trait CrossoverOperator: GeneticOperator {
     fn n_offsprings_per_crossover(&self) -> usize {

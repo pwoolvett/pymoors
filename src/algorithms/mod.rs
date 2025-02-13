@@ -1,6 +1,7 @@
 use numpy::ndarray::{concatenate, Axis};
-use rand::thread_rng;
+use rand::rngs::StdRng;
 use rand::Rng;
+use rand::SeedableRng;
 use std::error::Error;
 use std::fmt;
 
@@ -75,6 +76,7 @@ pub struct MultiObjectiveAlgorithm {
     num_iterations: usize,
     verbose: bool,
     n_vars: usize,
+    rng: StdRng,
 }
 
 impl MultiObjectiveAlgorithm {
@@ -99,8 +101,9 @@ impl MultiObjectiveAlgorithm {
         // Optional lower and upper bounds for each gene.
         lower_bound: Option<f64>,
         upper_bound: Option<f64>,
+        seed: Option<u64>,
     ) -> Result<Self, MultiObjectiveAlgorithmError> {
-        let mut rng = thread_rng();
+        let mut rng = seed.map_or_else(StdRng::from_entropy, StdRng::seed_from_u64);
         let mut genes = sampler.operate(pop_size, n_vars, &mut rng);
 
         // Create the evolution operator.
@@ -142,14 +145,15 @@ impl MultiObjectiveAlgorithm {
             num_iterations,
             verbose,
             n_vars,
+            rng,
         })
     }
 
-    fn next<R: Rng>(&mut self, rng: &mut R) -> Result<(), MultiObjectiveAlgorithmError> {
+    fn next(&mut self) -> Result<(), MultiObjectiveAlgorithmError> {
         // Obtain offspring genes.
         let offspring_genes = self
             .evolve
-            .evolve(&self.population, self.n_offsprings, 200, rng)
+            .evolve(&self.population, self.n_offsprings, 200, &mut self.rng)
             .map_err::<MultiObjectiveAlgorithmError, _>(Into::into)?;
 
         // Validate that the number of columns in offspring_genes matches n_vars.
@@ -181,10 +185,9 @@ impl MultiObjectiveAlgorithm {
     }
 
     pub fn run(&mut self) -> Result<(), MultiObjectiveAlgorithmError> {
-        let mut rng = thread_rng();
 
         for current_iter in 0..self.num_iterations {
-            match self.next(&mut rng) {
+            match self.next() {
                 Ok(()) => {
                     if self.verbose {
                         print_minimum_objectives(&self.population, current_iter + 1);
