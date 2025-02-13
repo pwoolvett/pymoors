@@ -21,6 +21,9 @@ jobs:
       with:
         python-version: ${{ env.DEFAULT_PYTHON }}
 
+    - name: install rust nightly
+      uses: dtolnay/rust-toolchain@nightly
+
     - name: Install cargo-llvm-cov
       uses: taiki-e/install-action@cargo-llvm-cov
 
@@ -52,10 +55,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: install rust nightly
+      uses: dtolnay/rust-toolchain@nightly
+
     - uses: actions/checkout@v4
     - name: Install cargo-llvm-cov
+
       uses: taiki-e/install-action@cargo-llvm-cov
     - name: Run tests
+
       run: cargo llvm-cov --workspace --lcov --output-path lcov.info
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v5
